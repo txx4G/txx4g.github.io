@@ -36,6 +36,10 @@ for _ in range(5):  # Добавляем стартовые объекты
 # Счет игрока
 score = 0
 
+rage = False
+max_im = 8
+percentage_spawn = 0.02
+
 # Шрифт
 font = pygame.font.SysFont("Arial", 24)
 
@@ -54,7 +58,7 @@ while running:
                     objects.remove(obj)
                     score += 1
     # Добавление нового объекта
-    if len(objects) < 10 and random.random() < 0.05:
+    if len(objects) < max_im and random.random() < percentage_spawn:
         new_obj = {
             "x": random.randint(50, WIDTH - 50),
             "y": random.randint(50, HEIGHT - 150),
@@ -77,6 +81,13 @@ while running:
     screen.fill(background_color)
     screen.blit(bg_texture, (0,0))
 
+    if rage:
+        victory_text = font.render("Степан, ты не прав. И остаешься на продленку!", True, GREEN)
+        screen.blit(victory_text, (WIDTH // 2 - victory_text.get_width()//2, HEIGHT - 40))
+        font_max = pygame.font.Font("Horroroidboldital.ttf", 256)
+        victory_text = font_max.render("And now?!", True, (168, 32, 32))
+        screen.blit(victory_text, (WIDTH // 2 - victory_text.get_width()//2, HEIGHT //2 - victory_text.get_height()//2))
+
     title_text = font.render("Лопни всех Степашек", True, GREEN)
     screen.blit(title_text, (WIDTH // 2 - title_text.get_width()//2, 20))
     # Отображение объектов
@@ -89,9 +100,13 @@ while running:
 
     # Проверка на победу
     if not objects:  # Если все объекты удалены
-        victory_text = font.render("Степан, ты не прав. И остаешься на продленку!", True, GREEN)
-        screen.blit(victory_text, (WIDTH // 2 - victory_text.get_width()//2, HEIGHT - 40))
-        time.sleep(5)
+
+        rage = True
+        max_im = 50
+        percentage_spawn = 0.2
+
+
+        
 
     pygame.display.flip()
 
