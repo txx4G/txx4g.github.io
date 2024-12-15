@@ -7,7 +7,7 @@ pygame.init()
 # Параметры окна
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Игра: Лови объекты!")
+pygame.display.set_caption("Да-да!")
 
 # Цвета
 WHITE = (255, 255, 255)
@@ -21,6 +21,11 @@ object_texture = pygame.transform.scale(object_texture, (50, 50))
 
 bg_texture = pygame.image.load("bg.png")
 bg_texture = pygame.transform.scale(bg_texture, (WIDTH, HEIGHT))
+
+
+cursor_image = pygame.image.load("knife.png")  # Укажите путь к вашей картинке курсора
+cursor_image = pygame.transform.scale(cursor_image, (50, 80))  # Измените размер картинки, если нужно
+pygame.mouse.set_visible(False)  # Скрываем стандартный курсор
 
 # Параметры объектов
 objects = []  # Список объектов
@@ -88,7 +93,7 @@ while running:
         victory_text = font_max.render("And now?!", True, (168, 32, 32))
         screen.blit(victory_text, (WIDTH // 2 - victory_text.get_width()//2, HEIGHT //2 - victory_text.get_height()//2))
 
-    title_text = font.render("Лопни всех Степашек", True, GREEN)
+    title_text = font.render("Лопни всех Степашек 2.0", True, GREEN)
     screen.blit(title_text, (WIDTH // 2 - title_text.get_width()//2, 20))
     # Отображение объектов
     for obj in objects:
@@ -105,6 +110,9 @@ while running:
         max_im = 50
         percentage_spawn = 0.2
 
+        # Отображение пользовательского курсора
+    mouse_x, mouse_y = pygame.mouse.get_pos()
+    screen.blit(cursor_image, (mouse_x - cursor_image.get_width() // 2, mouse_y - cursor_image.get_height() // 2))
 
         
 
